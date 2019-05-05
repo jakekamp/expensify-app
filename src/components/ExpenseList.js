@@ -1,0 +1,31 @@
+import React from 'react'
+import { connect } from 'react-redux'
+
+import ExpenseListItem from './ExpenseListItem'
+import selectExpenses from '../selectors/expenses'
+
+
+const ExpenseList = (props) => (
+    <div>
+        <h1>Expense List</h1>
+        {props.expenses.map((expense) => {
+            return (
+                <ExpenseListItem key={expense.id} {...expense} />
+            )
+        })}
+    </div>
+)
+
+const mapStateToProps = (state) => {
+    return {
+        expenses: selectExpenses(state.expenses, state.filters)
+    }
+}
+
+const ConnectedExpenseList = connect(mapStateToProps)(ExpenseList)
+
+export default ConnectedExpenseList
+
+// could do it this way
+// export default = connect(mapStateToProps)(ExpenseList)
+// wher eyou just export default rather than naming it and exporting the named variable default... accomplished the same thing
